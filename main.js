@@ -2,6 +2,7 @@ var CELL_WIDTH = 100;
 var CELL_HEIGHT = 100;
 var ROWS = 5;
 var COLS = 5;
+var SCORE = 0;
 
 
 //These can be retrieved without hard-coding. However, I think that adds extra complexity.
@@ -15,7 +16,8 @@ var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
-                  [5,4,3,2,1]]
+                  [5,4,3,2,1]];
+
 function Dice() {
     /* 
     Standard dice orientation: Key is top value, Array is [back, right, front, left]
@@ -25,7 +27,7 @@ function Dice() {
                                  3:[5, 6, 1, 2],
                                  4:[5, 1, 2, 6],
                                  5:[6, 3, 1, 4],
-                                 6:[5, 4, 2, 3]}
+                                 6:[5, 4, 2, 3]};
     var top;
     var bottom;
     var left;
@@ -84,7 +86,7 @@ window.onload = function() {
                           '3':'board_3',
                           '4':'board_4',
                           '5':'board_5',
-                          '6':'board_6'}
+                          '6':'board_6'};
     
     
     function preload () {
@@ -98,37 +100,41 @@ window.onload = function() {
 
     function create () {
         
-        this.game.board_sprites = draw_Board(test_board,board_img_dict)
+        this.game.board_sprites = draw_Board(test_board,board_img_dict);
     }
     
     
     //Creates a sprite for the cell at (x,y) corresponding to the given value. 
     function draw_Cell(value, locX, locY, img_dict){
-        var cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value])
-        cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH
-        cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_HEIGHT
-        return cell
+        var cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value]);
+        cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH;
+        cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_HEIGHT;
+        return cell;
     }
     
     //Creates the whole board given an of the values.
     //board_array: 2d array.
     function draw_Board(board_array, img_dict){
-        sprites_array = []
+        sprites_array = [];
         board_array.forEach(function(row, col_index){
-            sprite_row = []
+            sprite_row = [];
             row.forEach(function(value, row_index){
-                sprite_row.push(draw_Cell(value, row_index, col_index, img_dict))
-            })
-            sprites_array.push(sprite_row)
-        })
-        return sprites_array
+                sprite_row.push(draw_Cell(value, row_index, col_index, img_dict));
+            });
+            sprites_array.push(sprite_row);
+        });
+        return sprites_array;
     }
     
     //Replaces the image of a cell after the value changes.
     //Does not create a new sprite, therefore should save resources.
     function update_Cell(value, locX, locY, img_dict){
-        cell = game.board_sprites[locX][locY]
-        cell.loadTexture(img_dict[value])
+        cell = game.board_sprites[locX][locY];
+        cell.loadTexture(img_dict[value]);
+    }
+
+    function update_Score(){
+        SCORE += 10;
     }
 
 };
