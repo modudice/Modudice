@@ -15,7 +15,41 @@ var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
-                  [5,4,3,2,1]]     
+                  [5,4,3,2,1]]
+function Dice() {
+    /* 
+    Standard dice orientation: Key is top value, Array is [back, right, front, left]
+    */
+    var DICE_ORIENTATION_DICT = {1:[5, 3, 2, 4],
+                                 2:[1, 3, 6, 4],
+                                 3:[5, 6, 1, 2],
+                                 4:[5, 1, 2, 6],
+                                 5:[6, 3, 1, 4],
+                                 6:[5, 4, 2, 3]}
+    var top;
+    var bottom;
+    var left;
+    var right;
+    var front;
+    var back;
+    resetDice();
+
+    /* set 6 variables randomly, using dict*/
+    function resetDice() {}
+
+    /* these four functions will update the 6 variables appropriately */
+    function rollUp() {}
+
+    function rollDown() {}
+
+    function rollLeft() {}
+
+    function rollRight() {}
+
+    /* we also need getter functions */
+
+
+}
 
 window.onload = function() {
 
