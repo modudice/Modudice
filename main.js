@@ -1,5 +1,5 @@
-var CELL_WIDTH = 200;
-var CELL_HEIGHT = 200;
+var CELL_WIDTH = 100;
+var CELL_HEIGHT = 100;
 var ROWS = 5;
 var COLS = 5;
 
@@ -15,9 +15,7 @@ var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
-                  [5,4,3,2,1]]
-                  
-
+                  [5,4,3,2,1]]     
 
 window.onload = function() {
 
