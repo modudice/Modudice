@@ -15,7 +15,7 @@ var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
                   [1,2,3,4,5],
-                  [1,2,3,4,5]]
+                  [5,4,3,2,1]]
                   
 
 
@@ -42,8 +42,7 @@ window.onload = function() {
 
     function create () {
         
-        draw_Board(test_board,board_img_dict)
-
+        this.game.board_sprites = draw_Board(test_board,board_img_dict)
     }
     
     
@@ -52,16 +51,28 @@ window.onload = function() {
         var cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value])
         cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH
         cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_HEIGHT
+        return cell
     }
     
     //Creates the whole board given an of the values.
     //board_array: 2d array.
     function draw_Board(board_array, img_dict){
+        sprites_array = []
         board_array.forEach(function(row, col_index){
+            sprite_row = []
             row.forEach(function(value, row_index){
-                draw_Cell(value, row_index, col_index, img_dict)
+                sprite_row.push(draw_Cell(value, row_index, col_index, img_dict))
             })
+            sprites_array.push(sprite_row)
         })
+        return sprites_array
+    }
+    
+    //Replaces the image of a cell after the value changes.
+    //Does not create a new sprite, therefore should save resources.
+    function update_Cell(value, locX, locY, img_dict){
+        cell = game.board_sprites[locX][locY]
+        cell.loadTexture(img_dict[value])
     }
 
 };
