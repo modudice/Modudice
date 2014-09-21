@@ -38,13 +38,37 @@ function Dice() {
     function resetDice() {}
 
     /* these four functions will update the 6 variables appropriately */
-    function rollUp() {}
+    function rollUp(){
+        temp = front;
+        front = bottom;
+        bottom = back;
+        back = top;
+        top = temp;
+    }
 
-    function rollDown() {}
+    function rollLeft(){
+        temp = front;
+        front = right;
+        right = back;
+        back = left;
+        left = temp;
+    }
 
-    function rollLeft() {}
+    function rollRight(){
+        temp = front;
+        front = left;
+        left = back;
+        back = right;
+        right = temp;
+    }
 
-    function rollRight() {}
+    function rollDown(){
+        temp = front;
+        front = top;
+        top = back;
+        back = bottom;
+        bottom = temp;
+    }
 
     /* we also need getter functions */
 
