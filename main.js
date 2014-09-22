@@ -9,7 +9,7 @@ var score = 0;
 var BOARD_IMAGE_WIDTH = 690; //721
 var BOARD_IMAGE_HEIGHT = 690;
 
-var DIE_IMAGE_WIDTH = 431;
+var DIE_IMAGE_WIDTH = 431 //431;
 var DIE_IMAGE_HEIGHT = 431;
 
 var GAME_WIDTH = ROWS*CELL_WIDTH+4;
@@ -32,7 +32,13 @@ window.onload = function() {
                           '3':'board_3',
                           '4':'board_4',
                           '5':'board_5',
-                          '6':'board_6'};
+                          '6':'board_6',
+                          'd1': 'die_1',
+                          'd2': 'die_2',
+                          'd3': 'die_3',
+                          'd4': 'die_4',
+                          'd5': 'die_5',
+                          'd6': 'die_6',};
     
     
     function preload () {
@@ -82,34 +88,65 @@ window.onload = function() {
 
     // this was coded up in 5 minutes, yes i know it looks crappy
     function getTextGUI(board) {
-        line0 = "Score: " + board.getScore() + "\n";
-        line1 = "Dice:" + "\n";
+        line0 = "    Score: " + board.getScore() + "\n";
+        line1 = "    Dice:" + "\n";
         var dice = board.getDice();
         var top = dice.getTopValue();
         var north = dice.getNorthValue();
         var south = dice.getSouthValue();
         var east = dice.getEastValue();
         var west = dice.getWestValue();
-        dice_text_formatted = "   " + north +"\n" + " " + west + " " + top + " " + east + "\n   " + south;
-        line2 = dice_text_formatted + "\n";
-        line3 = "Dice position:" + "\n";
+        dice_text_formatted = "   " + north +"\n" + "    " + west + " " + top + " " + east + "\n       " + south;
+        line2 = "    " + dice_text_formatted + "\n";
+        line3 = "    Dice position:" + "\n";
         var dicePosition = board.getDicePosition();
-        line4 = "[" + dicePosition[0] + ", " + dicePosition[1] + "]" + "\n";
-        line5 = "Moves Remaining: " + board.getMovesRemaining() + "\n";
-        line6 = "Combo Length: " + board.getComboLength();
+        line4 = "    [" + dicePosition[0] + ", " + dicePosition[1] + "]" + "\n";
+        line5 = "    Moves Remaining: " + board.getMovesRemaining() + "\n";
+        line6 = "    Combo Length: " + board.getComboLength();
         return line0 + line1 + line2 + line3 + line4 + line5 + line6;
 
     }
+
+    //draws a die face (unfinished code)
+    // function drawDie(value, locX, locY){
+    //     var cell
+    //     var diceVal = 'd'+value;
+    //     cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
+    //     cell.scale.x = CELL_WIDTH / DIE_IMAGE_WIDTH;
+    //     cell.scale.y = CELL_HEIGHT / DIE_IMAGE_WIDTH;
+    //     return cell;
+    // }
     
-    
+    //draws the navigator (unfinished code)
+    // function drawNavigator(board, img_dict){
+    //     var dice = board.getDice();
+    //     drawDie(dice.getTopValue(), 8,2);
+    //     drawDie(dice.getNorthValue(), 8,1);
+    //     drawDie(dice.getSouthValue(), 8,3);
+    //     drawDie(dice.getEastValue(), 7,2);
+    //     drawDie(dice.getWestValue(), 9,2);
+    // }
+
     //Creates a sprite for the cell at (x,y) corresponding to the given value. 
     function draw_Cell(value, locX, locY, img_dict){
         var cell;
-        if (value != null && value > 0) {
+        var dicePos = board.getDicePosition();
+        
+        //draw a dice face if cell has a dice on it
+        if (dicePos[1]==locX && dicePos[0]==locY){
+            // return drawDie(board.getDice().getTopValue(), locX, locY); 
+            var diceVal = 'd'+board.getDice().getTopValue();
+            cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
+            cell.scale.x = CELL_WIDTH / DIE_IMAGE_WIDTH;
+            cell.scale.y = CELL_HEIGHT / DIE_IMAGE_WIDTH;
+            return cell;
+        // otherwise draw a number cell
+        } else if (value != null && value > 0) {
             cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value]);
-        } else{
+        } else {
             cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, 'board_free');
         }
+
         cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH;
         cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_HEIGHT;
         return cell;
