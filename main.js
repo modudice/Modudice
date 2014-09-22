@@ -59,28 +59,32 @@ window.onload = function() {
 
     function create () {
         this.game.board_sprites = draw_Board(board ,board_img_dict);
-        textGUI = game.add.text(500, 0, getTextGUI(board), { fontSize: '32px', fill: '#FF0000' });
+        // textGUI = game.add.text(500, 0, getTextGUI(board), { fontSize: '32px', fill: '#FF0000' });
 
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onUp.add(function() {
             cellsChanged = board.moveWest();
             update_Board(board, board_img_dict, cellsChanged);
-            textGUI.text = getTextGUI(board);
+            update_score();
+            // textGUI.text = getTextGUI(board);
         }, this);
         cursors.right.onUp.add(function() {
             cellsChanged = board.moveEast();
             update_Board(board, board_img_dict, cellsChanged);
-            textGUI.text = getTextGUI(board);
+            update_score();
+            // textGUI.text = getTextGUI(board);
         }, this);
         cursors.up.onUp.add(function() {
             cellsChanged = board.moveNorth();
             update_Board(board, board_img_dict, cellsChanged);
-            textGUI.text = getTextGUI(board);
+            update_score();
+            // textGUI.text = getTextGUI(board);
         }, this);
         cursors.down.onUp.add(function() {
             cellsChanged = board.moveSouth();
             update_Board(board, board_img_dict, cellsChanged);
-            textGUI.text = getTextGUI(board);
+            update_score();
+            // textGUI.text = getTextGUI(board);
         }, this);
     }
 
@@ -183,6 +187,10 @@ window.onload = function() {
     function update_Cell(value, locX, locY, img_dict){
         cell = game.board_sprites[locX][locY];
         cell.loadTexture(img_dict[value]);
+    }
+
+    function update_score() {
+
     }
 
 };
