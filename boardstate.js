@@ -1,3 +1,25 @@
+function BoardState(size) {
+
+    // Instantiate blank board
+    var board = new Array(size);
+    for (i = 0; i < size; i++) {
+        board[i] = new Array(size);
+    }
+
+    // Popular board with values
+    for (i = 0; i < size; i++) {
+        for (j = 0; j < size; j++) {
+            
+        }
+    }
+
+}
+
+
+
+
+
+
 function Dice() {
     /* 
     Standard dice orientation: Key is front value (the value that is added to the board tile)
@@ -19,7 +41,7 @@ function Dice() {
 
     resetDice();
 
-    /* Rolls the die: set 6 variables randomly, using dict*/
+    /* Rolls the die: set 6 variables randomly, using dict */
     function resetDice() {
         front = Math.floor((Math.random() * 6) + 1);
         back = 7 - front;
