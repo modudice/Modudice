@@ -5,6 +5,14 @@ Instantiate a Board Game. Size >= 3
 function Board(size) {
 
     var TILE_RESET_TURN = 2;
+    var BASE_SCORE = 100;
+    var BASE_MOVES = 3;
+
+    var score = 0;
+    var movesRemaining = 50;
+    var comboLenth = 0;
+    var dice = new Dice();
+    var dicePosition = [size/2, size/2];
 
     // Instantiate blank board
     var board = new Array(size);
@@ -30,13 +38,24 @@ function Board(size) {
     }
 
     /*
-    Add value to position i, j mod 7
+    Move die with value diceValue to position i,j.
+    Should be a valid move (inside the board).
     */
-    this.makeMove = function(i, j, diceValue) {
-
+    function makeMove(i, j, diceValue) {
+        movesRemaining -= 1;
         if (board[i][j] != null && board[i][j] > 0)
-            (board[i][j] + diceValue) % 7;
+            board[i][j] = (board[i][j] + diceValue) % 7;
         }
+        if (board[i][j] === 0) {
+            // Increment combo length, add score and moves.
+            comboLength += 1;
+            score += BASE_SCORE * comboLength;
+            movesRemaining += BASE_MOVES * comboLength;
+        }
+        else {
+            comboLength = 0;
+        }
+
         for (x = 0; x < size; x++) {
             for (y = 0; y < size; y++) {
                 var val = board[x][y];
@@ -53,7 +72,66 @@ function Board(size) {
                 }
             }
         }
-        return board[i][j];
+    }
+
+    function isValidPosition(i, j) {
+        return !(i < 0 || j < 0 || i >= size || j >= size);
+    }
+
+    this.moveNorth = function() {
+        i = dicePosition[0] - 1;
+        j = dicePosition[1];
+        if (isValidPosition(i,j)) {
+            dice.rollNorth();
+            dicePosition = [i,j];
+            makeMove(i, j, dice.getTopValue());
+        }
+    }
+
+    this.moveSouth = function() {
+        i = dicePosition[0] + 1;
+        j = dicePosition[1];
+        if (isValidPosition(i,j)) {
+            dice.rollSouth();
+            dicePosition = [i,j];
+            makeMove(i, j, dice.getTopValue());
+        }
+    }
+
+    this.moveEast = function() {
+        i = dicePosition[0];
+        j = dicePosition[1] + 1;
+        if (isValidPosition(i,j)) {
+            dice.rollEast();
+            dicePosition = [i,j];
+            makeMove(i, j, dice.getTopValue());
+        }
+    }
+
+    this.moveWest = function() {
+        i = dicePosition[0];
+        j = dicePosition[1] - 1;
+        if (isValidPosition(i,j)) {
+            dice.rollWest();
+            dicePosition = [i,j];
+            makeMove(i, j, dice.getTopValue());
+        }
+    }
+
+    this.getScore = function() {
+        return score;
+    }
+
+    this.getDicePosition = function() {
+        return dicePosition;
+    }
+
+    this.getComboLength = function() {
+        return comboLength;
+    }
+
+    this.isGameOver = function() {
+        return movesRemaining === 0;
     }
 }
 
