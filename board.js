@@ -46,7 +46,7 @@ function Board (size) {
     this.moveNorth = function() {
         i = dicePosition[0] - 1;
         j = dicePosition[1];
-        if (isValidPosition(i,j)) {
+        if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollNorth();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
@@ -56,7 +56,7 @@ function Board (size) {
     this.moveSouth = function() {
         i = dicePosition[0] + 1;
         j = dicePosition[1];
-        if (isValidPosition(i,j)) {
+        if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollSouth();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
@@ -66,7 +66,7 @@ function Board (size) {
     this.moveEast = function() {
         i = dicePosition[0];
         j = dicePosition[1] + 1;
-        if (isValidPosition(i,j)) {
+        if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollEast();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
@@ -77,10 +77,8 @@ function Board (size) {
 
         i = dicePosition[0];
         j = dicePosition[1] - 1;
-        if (isValidPosition(i,j)) {
-
-            dice.rollWest();
-                        
+        if (isValidPosition(i,j) && movesRemaining > 0) {
+            dice.rollWest();                      
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
         }
