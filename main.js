@@ -19,9 +19,11 @@ var test_board = [[1,2,3,4,5],
                   [5,4,3,2,1]];
 
 window.onload = function() {
+    var board = new Board(5);
 
-    var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-    
+    // TODO: fix the game width
+    var game = new Phaser.Game(GAME_WIDTH + 1000, GAME_HEIGHT, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
     var board_img_dict = {'1':'board_1',
                           '2':'board_2',
                           '3':'board_3',
@@ -41,14 +43,53 @@ window.onload = function() {
     }
 
     function create () {
-        alert("hi1");
-        var board = new Board(5);
-        
         this.game.board_sprites = draw_Board(board ,board_img_dict);
+        textGUI = game.add.text(500, 0, getTextGUI(board), { fontSize: '32px', fill: '#FF0000' });
+
+        cursors = game.input.keyboard.createCursorKeys();
+        cursors.left.onUp.add(function() {
+            board.moveWest();
+            draw_Board(board, board_img_dict);
+            textGUI.text = getTextGUI(board);}, this);
+        cursors.right.onUp.add(function() {
+            board.moveEast();
+            draw_Board(board, board_img_dict);
+            textGUI.text = getTextGUI(board);}, this);
+        cursors.up.onUp.add(function() {
+            board.moveNorth();
+            draw_Board(board, board_img_dict);
+            textGUI.text = getTextGUI(board);}, this);
+        cursors.down.onUp.add(function() {
+            board.moveSouth();
+            draw_Board(board, board_img_dict);
+            textGUI.text = getTextGUI(board);}, this);
+
+
+
     }
 
     function update() {
-        // TODO: fill this in
+    }
+
+    // this was coded up in 5 minutes, yes i know it looks crappy
+    function getTextGUI(board) {
+        line0 = "Score: " + board.getScore() + "\n";
+        line1 = "Dice:" + "\n";
+        var dice = board.getDice();
+        var top = dice.getTopValue();
+        var north = dice.getNorthValue();
+        var south = dice.getSouthValue();
+        var east = dice.getEastValue();
+        var west = dice.getWestValue();
+        dice_text_formatted = "   " + north +"\n" + " " + west + " " + top + " " + east + "\n   " + south;
+        line2 = dice_text_formatted + "\n";
+        line3 = "Dice position:" + "\n";
+        var dicePosition = board.getDicePosition();
+        line4 = "[" + dicePosition[0] + ", " + dicePosition[1] + "]" + "\n";
+        line5 = "Moves Remaining: " + board.getMovesRemaining() + "\n";
+        line6 = "Combo Length: " + board.getComboLength();
+        return line0 + line1 + line2 + line3 + line4 + line5 + line6;
+
     }
     
     
@@ -68,12 +109,12 @@ window.onload = function() {
     //Creates the whole board given an of the values.
     //board_array: 2d array.
     function draw_Board(board, img_dict){
-        size = 5;
+        size = board.getSize();
         sprites_array = [];
         for (i = 0; i < size; i++) {
             sprite_row = [];
             for (j = 0; j < size; j++) {
-                sprite_row.push(draw_Cell(board.getValue(i, j), i, j, img_dict));
+                sprite_row.push(draw_Cell(board.getValue(i, j), j, i, img_dict));
 
             }
             sprites_array.push(sprite_row);

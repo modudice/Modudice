@@ -38,45 +38,9 @@ function Board (size) {
         return board[i][j];
     }
 
-    /*
-    Move die with value diceValue to position i,j.
-    Should be a valid move (inside the board).
-    */
-    function makeMove(i, j, diceValue) {
-        movesRemaining -= 1;
-        if (board[i][j] != null && board[i][j] > 0) {
-            board[i][j] = (board[i][j] + diceValue) % 7;
-        }
-        if (board[i][j] === 0) {
-            // Increment combo length, add score and moves.
-            comboLength += 1;
-            score += BASE_SCORE * comboLength;
-            movesRemaining += BASE_MOVES * comboLength;
-        }
-        else {
-            comboLength = 0;
-        }
 
-        for (x = 0; x < size; x++) {
-            for (y = 0; y < size; y++) {
-                var val = board[x][y];
-                if (val === null) {
-                    // Permanent blank square, do nothing.
-                }
-                else if (val <= 0) {
-                    // Decrement the timer.
-                    board[x][y] -= 1;
-                    if (board[x][y] === -TILE_RESET_TURN) {
-                        // The timer has run out, reset square.
-                        board[x][y] = Math.floor((Math.random() * 6) + 1);
-                    }
-                }
-            }
-        }
-    }
-
-    function isValidPosition(i, j) {
-        return !(i < 0 || j < 0 || i >= size || j >= size);
+    this.getSize = function() {
+        return size;
     }
 
     this.moveNorth = function() {
@@ -110,17 +74,25 @@ function Board (size) {
     }
 
     this.moveWest = function() {
+
         i = dicePosition[0];
         j = dicePosition[1] - 1;
         if (isValidPosition(i,j)) {
+
             dice.rollWest();
+                        
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
         }
+
     }
 
     this.getScore = function() {
         return score;
+    }
+
+    this.getDice = function() {
+        return dice;
     }
 
     this.getDicePosition = function() {
@@ -131,12 +103,53 @@ function Board (size) {
         return comboLength;
     }
 
-    this.getSize = function() {
-        return size;
+    this.getMovesRemaining = function() {
+        return movesRemaining;
     }
 
     this.isGameOver = function() {
         return movesRemaining === 0;
+    }
+
+    /*
+    Move die with value diceValue to position i,j.
+    Should be a valid move (inside the board).
+    */
+    function makeMove(i, j, diceValue) {
+        movesRemaining -= 1;
+        if (board[i][j] != null && board[i][j] > 0) {
+            board[i][j] = (board[i][j] + diceValue) % 7;
+        }
+        if (board[i][j] === 0) {
+            // Increment combo length, add score and moves.
+            comboLength += 1;
+            score += BASE_SCORE * comboLength;
+            movesRemaining += BASE_MOVES * comboLength;
+        }
+        else {
+            comboLength = 0;
+        }
+
+        for (x = 0; x < size; x++) {
+            for (y = 0; y < size; y++) {
+                var val = board[x][y];
+                if (val === null) {
+                    // Permanent blank square, do nothing.
+                }
+                else if (val <= 0) {
+                    // Decrement the timer.
+                    board[x][y] -= 1;
+                    if (board[x][y] === -TILE_RESET_TURN - 1) {
+                        // The timer has run out, reset square.
+                        board[x][y] = Math.floor((Math.random() * 6) + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    function isValidPosition(i, j) {
+        return !(i < 0 || j < 0 || i >= size || j >= size);
     }
 }
 
@@ -183,63 +196,59 @@ function Dice() {
     }
 
     /* these four functions will update the 6 variables appropriately */
-    function rollNorth() {
+    this.rollNorth = function() {
         temp = top;
         top = south;
         south = bottom;
         bottom = north;
         north = temp;
-        return top;
     }
 
-    function rollSouth() {
+    this.rollSouth = function() {
         temp = top;
         top = north;
         north = bottom;
         bottom = south;
         south = temp;
-        return top;
     }
 
-    function rollEast() {
+    this.rollEast = function() {
         temp = top;
         top = west;
         west = bottom;
         bottom = east;
         east = temp;
-        return top;
     }
 
-    function rollWest() {
+    this.rollWest = function() {
         temp = top;
         top = east;
         east = bottom;
         bottom = west;
         west = temp;
+    }
+
+    this.getTopValue = function() {
         return top;
     }
 
-    function getTopValue() {
-        return top;
-    }
-
-    function getBottomValue() {
+    this.getBottomValue = function() {
         return bottom;
     }
 
-    function getNorthValue() {
+    this.getNorthValue = function() {
         return north;
     }
 
-    function getSouthValue() {
+    this.getSouthValue = function() {
         return south;
     }
 
-    function getEastValue() {
+    this.getEastValue = function() {
         return east;
     }
 
-    function getWestValue() {
+    this.getWestValue = function() {
         return west;
     }
 
