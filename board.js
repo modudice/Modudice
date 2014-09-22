@@ -4,7 +4,7 @@ Instantiate a Board Game. Size >= 3
 */
 function Board (size) {
 
-    var TILE_RESET_TURN = 2;
+    var TILE_RESET_TURN = 3;
     var BASE_SCORE = 100;
     var BASE_MOVES = 3;
 
