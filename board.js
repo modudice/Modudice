@@ -1,4 +1,4 @@
-// DEPRECATED
+
 /*
 Instantiate a Board Game. Size >= 3
 */
@@ -12,9 +12,10 @@ function Board (size) {
     var movesRemaining = 50;
     var comboLength = 0;
     var dice = new Dice();
-    var dicePosition = [size/2, size/2];
+    var dicePosition = [Math.floor(size/2), Math.floor(size/2)];
 
     // Instantiate blank board
+
     var board = new Array(size);
     for (i = 0; i < size; i++) {
         board[i] = new Array(size);
@@ -28,9 +29,9 @@ function Board (size) {
     }
 
     // Designate free spaces (-1 in board)
-    board[size / 2][size / 2] = null;
-    if (size % 2 == 0) {
-        board[size / 2 - 1][size / 2 - 1] = null;
+    board[Math.floor(size/2)][Math.floor(size/2)] = null;
+    if (size % 2 === 0) {
+        board[Math.floor(size/2) - 1][Math.floor(size/2) - 1] = null;
     }
 
     this.getValue = function(i, j) {
@@ -43,7 +44,7 @@ function Board (size) {
     */
     function makeMove(i, j, diceValue) {
         movesRemaining -= 1;
-        if (board[i][j] != null && board[i][j] > 0)
+        if (board[i][j] != null && board[i][j] > 0) {
             board[i][j] = (board[i][j] + diceValue) % 7;
         }
         if (board[i][j] === 0) {

@@ -14,100 +14,9 @@ var GAME_HEIGHT = COLS*CELL_HEIGHT;
 
 var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
-                  [1,2,7,4,5],
+                  [1,2,3,4,5],
                   [1,2,3,4,5],
                   [5,4,3,2,1]];
-
-function Dice() {
-    /* 
-    Standard dice orientation: Key is front value (the value that is added to the board tile)
-                               Array is [top, right, bottom, left]
-    */
-    var DICE_ORIENTATION_DICT = {1:[5, 3, 2, 4],
-                                 2:[1, 3, 6, 4],
-                                 3:[5, 6, 1, 2],
-                                 4:[5, 1, 2, 6],
-                                 5:[6, 3, 1, 4],
-                                 6:[5, 4, 2, 3]};
-
-    var front;
-    var back;
-    var top;
-    var bottom;
-    var left;
-    var right;
-
-    resetDice();
-
-    /* Rolls the die: set 6 variables randomly, using dict*/
-    function resetDice() {
-        front = Math.floor((Math.random() * 6) + 1);
-        back = 7 - front;
-
-        standardOrientation = DICE_ORIENTATION_DICT[front];
-        orientationIndex = Math.floor(Math.random()*4);
-        orientationArray = [0, 0, 0, 0]; // top, right, bottom, left
-
-        for (i = 0; i < 4; i++) {
-            orientationArray[i] = standardOrientation[orientationIndex];
-            orientationIndex = (orientationIndex + 1) % 4;
-        }
-
-        top = orientationArray[0];
-        right = orientationArray[1];
-        bottom = orientationArray[2];
-        left = orientationArray[3];
-    }
-
-    /* these four functions will update the 6 variables appropriately */
-    function rollUp(){
-        temp = front;
-        front = bottom;
-        bottom = back;
-        back = top;
-        top = temp;
-    }
-
-    function rollLeft(){
-        temp = front;
-        front = right;
-        right = back;
-        back = left;
-        left = temp;
-    }
-
-    function rollRight(){
-        temp = front;
-        front = left;
-        left = back;
-        back = right;
-        right = temp;
-    }
-
-    function rollDown(){
-        temp = front;
-        front = top;
-        top = back;
-        back = bottom;
-        bottom = temp;
-    }
-
-    /*
-    Get the value of the front side of the dice
-    */
-    function getFrontValue() {
-        return front;
-    }
-
-    /*
-    Get the values of the side of the dice (top, right, bottom, left)
-    */
-    function getSideValues() {
-        return [top, right, bottom, left];
-    }
-
-
-}
 
 window.onload = function() {
 
@@ -118,8 +27,7 @@ window.onload = function() {
                           '3':'board_3',
                           '4':'board_4',
                           '5':'board_5',
-                          '6':'board_6',
-                          '7':'board_free'};
+                          '6':'board_6'};
     
     
     function preload () {
@@ -133,8 +41,10 @@ window.onload = function() {
     }
 
     function create () {
+        alert("hi1");
+        var board = new Board(5);
         
-        this.game.board_sprites = draw_Board(test_board,board_img_dict);
+        this.game.board_sprites = draw_Board(board ,board_img_dict);
     }
 
     function update() {
@@ -144,7 +54,12 @@ window.onload = function() {
     
     //Creates a sprite for the cell at (x,y) corresponding to the given value. 
     function draw_Cell(value, locX, locY, img_dict){
-        var cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value]);
+        var cell;
+        if (value != null && value > 0) {
+            cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value]);
+        } else{
+            cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, 'board_free');
+        }
         cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH;
         cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_HEIGHT;
         return cell;
@@ -152,15 +67,17 @@ window.onload = function() {
     
     //Creates the whole board given an of the values.
     //board_array: 2d array.
-    function draw_Board(board_array, img_dict){
+    function draw_Board(board, img_dict){
+        size = 5;
         sprites_array = [];
-        board_array.forEach(function(row, col_index){
+        for (i = 0; i < size; i++) {
             sprite_row = [];
-            row.forEach(function(value, row_index){
-                sprite_row.push(draw_Cell(value, row_index, col_index, img_dict));
-            });
+            for (j = 0; j < size; j++) {
+                sprite_row.push(draw_Cell(board.getValue(i, j), i, j, img_dict));
+
+            }
             sprites_array.push(sprite_row);
-        });
+        }
         return sprites_array;
     }
     
