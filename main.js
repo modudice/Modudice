@@ -25,7 +25,7 @@ window.onload = function() {
     var board = new Board(5);
 
     // TODO: fix the game width
-    var game = new Phaser.Game(GAME_WIDTH + 1000, GAME_HEIGHT, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, 'board', { preload: preload, create: create, update: update });
 
     var board_img_dict = {'1':'board_1',
                           '2':'board_2',
