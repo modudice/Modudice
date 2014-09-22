@@ -9,7 +9,7 @@ var score = 0;
 var BOARD_IMAGE_WIDTH = 690; //721
 var BOARD_IMAGE_HEIGHT = 690;
 
-var DIE_IMAGE_WIDTH = 431 //431;
+var DIE_IMAGE_WIDTH = 431; //431
 var DIE_IMAGE_HEIGHT = 431;
 
 var GAME_WIDTH = ROWS*CELL_WIDTH+4;
@@ -63,24 +63,25 @@ window.onload = function() {
 
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onUp.add(function() {
-            board.moveWest();
-            draw_Board(board, board_img_dict);
-            textGUI.text = getTextGUI(board);}, this);
+            cellsChanged = board.moveWest();
+            update_Board(board, board_img_dict, cellsChanged);
+            textGUI.text = getTextGUI(board);
+        }, this);
         cursors.right.onUp.add(function() {
-            board.moveEast();
-            draw_Board(board, board_img_dict);
-            textGUI.text = getTextGUI(board);}, this);
+            cellsChanged = board.moveEast();
+            update_Board(board, board_img_dict, cellsChanged);
+            textGUI.text = getTextGUI(board);
+        }, this);
         cursors.up.onUp.add(function() {
-            board.moveNorth();
-            draw_Board(board, board_img_dict);
-            textGUI.text = getTextGUI(board);}, this);
+            cellsChanged = board.moveNorth();
+            update_Board(board, board_img_dict, cellsChanged);
+            textGUI.text = getTextGUI(board);
+        }, this);
         cursors.down.onUp.add(function() {
-            board.moveSouth();
-            draw_Board(board, board_img_dict);
-            textGUI.text = getTextGUI(board);}, this);
-
-
-
+            cellsChanged = board.moveSouth();
+            update_Board(board, board_img_dict, cellsChanged);
+            textGUI.text = getTextGUI(board);
+        }, this);
     }
 
     function update() {
@@ -152,6 +153,15 @@ window.onload = function() {
         return cell;
     }
     
+    // Updates two cells the cell moved to and the cell moved from.
+    // Todo(gebhard): Reset zeros by new cracking mechanics
+    function update_Board(board, img_dict, cellsChanged) {
+        for (ind = 0; ind < 2; ind++) {
+            cell = cellsChanged[ind];
+            draw_Cell(board.getValue(cell[0], cell[1]), cell[1], cell[0], img_dict);
+        }
+
+    }
     //Creates the whole board given an of the values.
     //board_array: 2d array.
     function draw_Board(board, img_dict){
@@ -173,10 +183,6 @@ window.onload = function() {
     function update_Cell(value, locX, locY, img_dict){
         cell = game.board_sprites[locX][locY];
         cell.loadTexture(img_dict[value]);
-    }
-
-    function update_Score(){
-        score += 10;
     }
 
 };

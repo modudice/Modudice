@@ -36,12 +36,12 @@ function Board (size) {
 
     this.getValue = function(i, j) {
         return board[i][j];
-    }
+    };
 
 
     this.getSize = function() {
         return size;
-    }
+    };
 
     this.moveNorth = function() {
         i = dicePosition[0] - 1;
@@ -50,8 +50,9 @@ function Board (size) {
             dice.rollNorth();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
+            return [[i + 1, j], [i, j]];
         }
-    }
+    };
 
     this.moveSouth = function() {
         i = dicePosition[0] + 1;
@@ -60,8 +61,9 @@ function Board (size) {
             dice.rollSouth();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
+            return [[i - 1, j], [i, j]];
         }
-    }
+    };
 
     this.moveEast = function() {
         i = dicePosition[0];
@@ -70,44 +72,45 @@ function Board (size) {
             dice.rollEast();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
+            return [[i, j - 1], [i, j]];
         }
-    }
+    };
 
     this.moveWest = function() {
-
         i = dicePosition[0];
         j = dicePosition[1] - 1;
         if (isValidPosition(i,j) && movesRemaining > 0) {
-            dice.rollWest();                      
+            dice.rollWest();
             dicePosition = [i,j];
             makeMove(i, j, dice.getTopValue());
+            return [[i, j + 1], [i, j]];
         }
 
-    }
+    };
 
     this.getScore = function() {
         return score;
-    }
+    };
 
     this.getDice = function() {
         return dice;
-    }
+    };
 
     this.getDicePosition = function() {
         return dicePosition;
-    }
+    };
 
     this.getComboLength = function() {
         return comboLength;
-    }
+    };
 
     this.getMovesRemaining = function() {
         return movesRemaining;
-    }
+    };
 
     this.isGameOver = function() {
         return movesRemaining === 0;
-    }
+    };
 
     /*
     Move die with value diceValue to position i,j.
@@ -200,7 +203,7 @@ function Dice() {
         south = bottom;
         bottom = north;
         north = temp;
-    }
+    };
 
     this.rollSouth = function() {
         temp = top;
@@ -208,7 +211,7 @@ function Dice() {
         north = bottom;
         bottom = south;
         south = temp;
-    }
+    };
 
     this.rollEast = function() {
         temp = top;
@@ -216,7 +219,7 @@ function Dice() {
         west = bottom;
         bottom = east;
         east = temp;
-    }
+    };
 
     this.rollWest = function() {
         temp = top;
@@ -224,30 +227,30 @@ function Dice() {
         east = bottom;
         bottom = west;
         west = temp;
-    }
+    };
 
     this.getTopValue = function() {
         return top;
-    }
+    };
 
     this.getBottomValue = function() {
         return bottom;
-    }
+    };
 
     this.getNorthValue = function() {
         return north;
-    }
+    };
 
     this.getSouthValue = function() {
         return south;
-    }
+    };
 
     this.getEastValue = function() {
         return east;
-    }
+    };
 
     this.getWestValue = function() {
         return west;
-    }
+    };
 
 }
