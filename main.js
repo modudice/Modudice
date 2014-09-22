@@ -14,7 +14,7 @@ var GAME_HEIGHT = COLS*CELL_HEIGHT;
 
 var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
-                  [1,2,3,4,5],
+                  [1,2,7,4,5],
                   [1,2,3,4,5],
                   [5,4,3,2,1]];
 
@@ -111,14 +111,15 @@ function Dice() {
 
 window.onload = function() {
 
-    var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, '', { preload: preload, create: create });
+    var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, '', { preload: preload, create: create, update: update });
     
     var board_img_dict = {'1':'board_1',
                           '2':'board_2',
                           '3':'board_3',
                           '4':'board_4',
                           '5':'board_5',
-                          '6':'board_6'};
+                          '6':'board_6',
+                          '7':'board_free'};
     
     
     function preload () {
@@ -128,11 +129,16 @@ window.onload = function() {
         game.load.image('board_4', 'Assets/board_4.png');
         game.load.image('board_5', 'Assets/board_5.png');
         game.load.image('board_6', 'Assets/board_6.png');
+        game.load.image('board_free', 'Assets/board_free.png');
     }
 
     function create () {
         
         this.game.board_sprites = draw_Board(test_board,board_img_dict);
+    }
+
+    function update() {
+        // TODO: fill this in
     }
     
     
