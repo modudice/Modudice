@@ -6,11 +6,14 @@ var score = 0;
 
 
 //These can be retrieved without hard-coding. However, I think that adds extra complexity.
-var BOARD_IMAGE_WIDTH = 512;
-var BOARD_IMAGE_HEIGHT = 512;
+var BOARD_IMAGE_WIDTH = 690; //721
+var BOARD_IMAGE_HEIGHT = 690;
 
-var GAME_WIDTH = ROWS*CELL_WIDTH;
-var GAME_HEIGHT = COLS*CELL_HEIGHT;
+var DIE_IMAGE_WIDTH = 431;
+var DIE_IMAGE_HEIGHT = 431;
+
+var GAME_WIDTH = ROWS*CELL_WIDTH+4;
+var GAME_HEIGHT = COLS*CELL_HEIGHT+4;
 
 var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
@@ -40,6 +43,12 @@ window.onload = function() {
         game.load.image('board_5', 'Assets/board_5.png');
         game.load.image('board_6', 'Assets/board_6.png');
         game.load.image('board_free', 'Assets/board_free.png');
+        game.load.image('die_1', 'Assets/die_1.png');
+        game.load.image('die_2', 'Assets/die_2.png');
+        game.load.image('die_3', 'Assets/die_3.png');
+        game.load.image('die_4', 'Assets/die_4.png');
+        game.load.image('die_5', 'Assets/die_5.png');
+        game.load.image('die_6', 'Assets/die_6.png');
     }
 
     function create () {
