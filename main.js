@@ -59,32 +59,27 @@ window.onload = function() {
 
     function create () {
         this.game.board_sprites = draw_Board(board ,board_img_dict);
-        // textGUI = game.add.text(500, 0, getTextGUI(board), { fontSize: '32px', fill: '#FF0000' });
 
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onUp.add(function() {
             cellsChanged = board.moveWest();
             update_Board(board, board_img_dict, cellsChanged);
-            update_score();
-            // textGUI.text = getTextGUI(board);
+            update_text();
         }, this);
         cursors.right.onUp.add(function() {
             cellsChanged = board.moveEast();
             update_Board(board, board_img_dict, cellsChanged);
-            update_score();
-            // textGUI.text = getTextGUI(board);
+            update_text();
         }, this);
         cursors.up.onUp.add(function() {
             cellsChanged = board.moveNorth();
             update_Board(board, board_img_dict, cellsChanged);
-            update_score();
-            // textGUI.text = getTextGUI(board);
+            update_text();
         }, this);
         cursors.down.onUp.add(function() {
             cellsChanged = board.moveSouth();
             update_Board(board, board_img_dict, cellsChanged);
-            update_score();
-            // textGUI.text = getTextGUI(board);
+            update_text();
         }, this);
     }
 
@@ -188,9 +183,16 @@ window.onload = function() {
         cell = game.board_sprites[locX][locY];
         cell.loadTexture(img_dict[value]);
     }
-
+    function update_text() {
+        update_score();
+        update_moves();
+    }
     function update_score() {
+        document.getElementById("score").innerHTML = "Score: " + board.getScore();
+    }
 
+    function update_moves() {
+        document.getElementById("moves").innerHTML = "Moves Remaining: " + board.getMovesRemaining();
     }
 
 };
