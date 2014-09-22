@@ -6,11 +6,11 @@ var score = 0;
 
 
 //These can be retrieved without hard-coding. However, I think that adds extra complexity.
-var BOARD_IMAGE_WIDTH = 512;
-var BOARD_IMAGE_HEIGHT = 512;
+var BOARD_IMAGE_WIDTH = 690; //721
+var BOARD_IMAGE_HEIGHT = 690;
 
-var GAME_WIDTH = ROWS*CELL_WIDTH;
-var GAME_HEIGHT = COLS*CELL_HEIGHT;
+var GAME_WIDTH = ROWS*CELL_WIDTH+4;
+var GAME_HEIGHT = COLS*CELL_HEIGHT+4;
 
 var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
