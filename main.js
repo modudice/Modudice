@@ -6,14 +6,11 @@ var score = 0;
 
 
 //These can be retrieved without hard-coding. However, I think that adds extra complexity.
-var BOARD_IMAGE_WIDTH = 690; //721
-var BOARD_IMAGE_HEIGHT = 690;
+var BOARD_IMAGE_WIDTH = 500; //721
+var BOARD_IMAGE_HEIGHT = 500;
 
-var DIE_IMAGE_WIDTH = 431; //431
-var DIE_IMAGE_HEIGHT = 431;
-
-var GAME_WIDTH = ROWS*CELL_WIDTH+4;
-var GAME_HEIGHT = COLS*CELL_HEIGHT+4;
+var GAME_WIDTH = ROWS*CELL_WIDTH;
+var GAME_HEIGHT = COLS*CELL_HEIGHT;
 
 var test_board = [[1,2,3,4,5],
                   [1,2,3,4,5],
@@ -137,9 +134,6 @@ window.onload = function() {
             // return drawDie(board.getDice().getTopValue(), locX, locY); 
             var diceVal = 'd'+board.getDice().getTopValue();
             cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
-            cell.scale.x = CELL_WIDTH / DIE_IMAGE_WIDTH;
-            cell.scale.y = CELL_HEIGHT / DIE_IMAGE_WIDTH;
-            return cell;
         // otherwise draw a number cell
         } else if (value != null && value > 0) {
             cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value]);
