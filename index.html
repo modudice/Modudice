@@ -6,21 +6,39 @@
         <title>
             ModuDice
         </title>
-        <script src="phaser.min.js" type="text/javascript"></script>
-        <script src="board.js" type="text/javascript"></script>
-        <script src="main.js" type="text/javascript"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+        <script src="phaser.min.js" type="text/javascript">
+</script>
+        <script src="board.js" type="text/javascript">
+</script>
+        <script src="main.js" type="text/javascript">
+</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript">
+</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js" type="text/javascript">
+</script>
     </head>
     <body>
         <div class="container">
-            <script type="text/javascript"></script>
+            <script type="text/javascript">
+</script>
             <div class="header">
                 <h1 class="title">
                     ModuDice
                 </h1>
-                <div id="score">Score: 0</div>
-                <div id="moves">Moves Remainning: 50</div>
+            </div>
+            <div id="directions">
+                <b>HOW TO PLAY:</b> Use your arrow keys to move the dice. When you roll onto a square the number on the top face of the die adds to the number on the square. You create combos when you mod a square with 7!
+            </div>
+            <div class='game_info'>
+                <div id="score">
+                    Score: 0
+                </div>
+                <div id="moves">
+                    Moves Remaining: 50
+                </div>
+                <div id="combo">
+                    Combo Length: 0
+                </div>
             </div>
             <div id="board"></div>
         </div>
