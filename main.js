@@ -180,11 +180,14 @@ window.onload = function() {
     function update_text() {
         update_score();
         update_moves();
+        update_combo();
     }
     function update_score() {
         document.getElementById("score").innerHTML = "Score: " + board.getScore();
     }
-
+    function update_combo() {
+        document.getElementById("combo").innerHTML = "Combo Length: " + board.getComboLength();
+    }
     function update_moves() {
         document.getElementById("moves").innerHTML = "Moves Remaining: " + board.getMovesRemaining();
     }
