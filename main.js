@@ -178,6 +178,7 @@ window.onload = function() {
         cell.loadTexture(img_dict[value]);
     }
     function update_text() {
+        update_dice_visual();
         update_score();
         update_moves();
         update_combo();
@@ -190,6 +191,16 @@ window.onload = function() {
     }
     function update_moves() {
         document.getElementById("moves").innerHTML = "Moves Remaining: " + board.getMovesRemaining();
+    }
+    function update_dice_visual() {
+        var dice = board.getDice();
+        var top = dice.getTopValue();
+        var north = dice.getNorthValue();
+        var south = dice.getSouthValue();
+        var east = dice.getEastValue();
+        var west = dice.getWestValue();
+        dice_text_formatted = "   " + north +"<br>" + "    " + west + " " + top + " " + east + "<br>" + south;
+        document.getElementById("dice_visual").innerHTML = dice_text_formatted;
     }
 
 };

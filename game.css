@@ -43,6 +43,17 @@ html, body {
   top: 150px;
   clear: both;
 }
+ #dice_visual {
+  display: block;
+  background: #bbada0;
+  padding: 15px 25px;
+  font-size: 20px;
+  line-height: 42px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 10px;
+ }
 
 #score, #moves, #combo{
   display: block;
