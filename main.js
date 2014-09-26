@@ -57,6 +57,7 @@ window.onload = function() {
     function create () {
         this.game.board_sprites = draw_Board(board ,board_img_dict);
         this.game.die_sprite = draw_Cell('ERR', board.getDicePosition()[1], board.getDicePosition()[0], board_img_dict);
+        update_dice_visual();
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onUp.add(function() {
             cellsChanged = board.moveWest();
@@ -83,47 +84,6 @@ window.onload = function() {
     function update() {
     }
 
-    // this was coded up in 5 minutes, yes i know it looks crappy
-    function getTextGUI(board) {
-        line0 = "    Score: " + board.getScore() + "\n";
-        line1 = "    Dice:" + "\n";
-        var dice = board.getDice();
-        var top = dice.getTopValue();
-        var north = dice.getNorthValue();
-        var south = dice.getSouthValue();
-        var east = dice.getEastValue();
-        var west = dice.getWestValue();
-        dice_text_formatted = "   " + north +"\n" + "    " + west + " " + top + " " + east + "\n       " + south;
-        line2 = "    " + dice_text_formatted + "\n";
-        line3 = "    Dice position:" + "\n";
-        var dicePosition = board.getDicePosition();
-        line4 = "    [" + dicePosition[0] + ", " + dicePosition[1] + "]" + "\n";
-        line5 = "    Moves Remaining: " + board.getMovesRemaining() + "\n";
-        line6 = "    Combo Length: " + board.getComboLength();
-        return line0 + line1 + line2 + line3 + line4 + line5 + line6;
-
-    }
-
-    //draws a die face (unfinished code)
-//     function drawDie(value, locX, locY){
-//         var cell
-//         var diceVal = 'd'+value;
-//         cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
-//         cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH;
-//         cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_WIDTH;
-//         return cell;
-//     }
-    
-    //draws the navigator (unfinished code)
-    // function drawNavigator(board, img_dict){
-    //     var dice = board.getDice();
-    //     drawDie(dice.getTopValue(), 8,2);
-    //     drawDie(dice.getNorthValue(), 8,1);
-    //     drawDie(dice.getSouthValue(), 8,3);
-    //     drawDie(dice.getEastValue(), 7,2);
-    //     drawDie(dice.getWestValue(), 9,2);
-    // }
-
     //Creates a sprite for the cell at (x,y) corresponding to the given value. 
     function draw_Cell(value, locX, locY, img_dict){
         var cell;
@@ -133,7 +93,7 @@ window.onload = function() {
         if (dicePos[1]==locX && dicePos[0]==locY){
             // return drawDie(board.getDice().getTopValue(), locX, locY); 
             var diceVal = 'd'+board.getDice().getTopValue();
-            cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
+            cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]);
         // otherwise draw a number cell
         } else if (value != null && value > 0) {
             cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[value]);
@@ -155,11 +115,11 @@ window.onload = function() {
 //            cell = cellsChanged[ind];
 //            draw_Cell(board.getValue(cell[0], cell[1]), cell[1], cell[0], img_dict);
 //        }
-        console.log(cellsChanged)
+        console.log(cellsChanged);
         cellsChanged.forEach(function(cell, index){
-            update_Cell(board.getValue(cell[0], cell[1]), cell[0], cell[1], img_dict)
-        })
-        update_Die()
+            update_Cell(board.getValue(cell[0], cell[1]), cell[0], cell[1], img_dict);
+        });
+        update_Die();
         
     }
     //Creates the whole board given an of the values.
@@ -180,21 +140,21 @@ window.onload = function() {
     //Replaces the image of a cell after the value changes.
     //Does not create a new sprite, therefore should save resources.
     function update_Cell(value, locX, locY, img_dict){
-        console.log(img_dict)
+        console.log(img_dict);
         cell = game.board_sprites[locX][locY];
         if (value != null && value > 0){
             cell.loadTexture(img_dict[value]);
         }else{
-            cell.loadTexture('board_free')
+            cell.loadTexture('board_free');
         }
     }
     
     function update_Die(){
         var dicePos = board.getDicePosition();
-        game.die_sprite.x = dicePos[1] * CELL_WIDTH
-        game.die_sprite.y = dicePos[0] * CELL_HEIGHT
+        game.die_sprite.x = dicePos[1] * CELL_WIDTH;
+        game.die_sprite.y = dicePos[0] * CELL_HEIGHT;
         var diceVal = 'd'+board.getDice().getTopValue();
-        game.die_sprite.loadTexture(board_img_dict[diceVal])
+        game.die_sprite.loadTexture(board_img_dict[diceVal]);
     }
     function update_text() {
         update_dice_visual();
@@ -211,15 +171,18 @@ window.onload = function() {
     function update_moves() {
         document.getElementById("moves").innerHTML = "Moves Remaining: " + board.getMovesRemaining();
     }
-    function update_dice_visual() {
-        var dice = board.getDice();
-        var top = dice.getTopValue();
-        var north = dice.getNorthValue();
-        var south = dice.getSouthValue();
-        var east = dice.getEastValue();
-        var west = dice.getWestValue();
-        dice_text_formatted = "   " + north +"<br>" + "    " + west + " " + top + " " + east + "<br>" + south;
-        document.getElementById("dice_visual").innerHTML = dice_text_formatted;
+
+    function update_face(id, value) {
+        var die_png = "Assets/die_" + value + ".png";
+        document.getElementById(id).src = die_png;
     }
 
+    function update_dice_visual() {
+        var dice = board.getDice();
+        update_face("north", dice.getNorthValue());
+        update_face("west", dice.getWestValue());
+        update_face("center", dice.getTopValue());
+        update_face("east", dice.getEastValue());
+        update_face("south", dice.getSouthValue());
+    }
 };
