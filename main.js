@@ -24,7 +24,9 @@ window.onload = function() {
     // TODO: fix the game width
     var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, 'board', { preload: preload, create: create, update: update });
 
-    var board_img_dict = {'1':'board_1',
+    var board_img_dict = {
+                          '0':'board_0',
+                          '1':'board_1',
                           '2':'board_2',
                           '3':'board_3',
                           '4':'board_4',
@@ -39,6 +41,7 @@ window.onload = function() {
     
     
     function preload () {
+        game.load.image('board_0', 'Assets/board_0.png');
         game.load.image('board_1', 'Assets/board_1.png');
         game.load.image('board_2', 'Assets/board_2.png');
         game.load.image('board_3', 'Assets/board_3.png');
@@ -105,8 +108,6 @@ window.onload = function() {
         cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_HEIGHT;
         return cell;
     }
-    
-
     
     // Updates two cells the cell moved to and the cell moved from.
     // Todo(gebhard): Reset zeros by new cracking mechanics
