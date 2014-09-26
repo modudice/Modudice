@@ -56,7 +56,7 @@ window.onload = function() {
 
     function create () {
         this.game.board_sprites = draw_Board(board ,board_img_dict);
-
+        this.game.die_sprite = draw_Cell('ERR', board.getDicePosition()[1], board.getDicePosition()[0], board_img_dict);
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onUp.add(function() {
             cellsChanged = board.moveWest();
@@ -105,14 +105,14 @@ window.onload = function() {
     }
 
     //draws a die face (unfinished code)
-    // function drawDie(value, locX, locY){
-    //     var cell
-    //     var diceVal = 'd'+value;
-    //     cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
-    //     cell.scale.x = CELL_WIDTH / DIE_IMAGE_WIDTH;
-    //     cell.scale.y = CELL_HEIGHT / DIE_IMAGE_WIDTH;
-    //     return cell;
-    // }
+//     function drawDie(value, locX, locY){
+//         var cell
+//         var diceVal = 'd'+value;
+//         cell = game.add.sprite(locX*CELL_WIDTH,locY*CELL_HEIGHT, img_dict[diceVal]); 
+//         cell.scale.x = CELL_WIDTH / BOARD_IMAGE_WIDTH;
+//         cell.scale.y = CELL_HEIGHT / BOARD_IMAGE_WIDTH;
+//         return cell;
+//     }
     
     //draws the navigator (unfinished code)
     // function drawNavigator(board, img_dict){
@@ -146,14 +146,21 @@ window.onload = function() {
         return cell;
     }
     
+
+    
     // Updates two cells the cell moved to and the cell moved from.
     // Todo(gebhard): Reset zeros by new cracking mechanics
     function update_Board(board, img_dict, cellsChanged) {
-        for (ind = 0; ind < 2; ind++) {
-            cell = cellsChanged[ind];
-            draw_Cell(board.getValue(cell[0], cell[1]), cell[1], cell[0], img_dict);
-        }
-
+//        for (ind = 0; ind < 2; ind++) {
+//            cell = cellsChanged[ind];
+//            draw_Cell(board.getValue(cell[0], cell[1]), cell[1], cell[0], img_dict);
+//        }
+        console.log(cellsChanged)
+        cellsChanged.forEach(function(cell, index){
+            update_Cell(board.getValue(cell[0], cell[1]), cell[0], cell[1], img_dict)
+        })
+        update_Die()
+        
     }
     //Creates the whole board given an of the values.
     //board_array: 2d array.
@@ -164,7 +171,6 @@ window.onload = function() {
             sprite_row = [];
             for (j = 0; j < size; j++) {
                 sprite_row.push(draw_Cell(board.getValue(i, j), j, i, img_dict));
-
             }
             sprites_array.push(sprite_row);
         }
@@ -174,8 +180,21 @@ window.onload = function() {
     //Replaces the image of a cell after the value changes.
     //Does not create a new sprite, therefore should save resources.
     function update_Cell(value, locX, locY, img_dict){
+        console.log(img_dict)
         cell = game.board_sprites[locX][locY];
-        cell.loadTexture(img_dict[value]);
+        if (value != null && value > 0){
+            cell.loadTexture(img_dict[value]);
+        }else{
+            cell.loadTexture('board_free')
+        }
+    }
+    
+    function update_Die(){
+        var dicePos = board.getDicePosition();
+        game.die_sprite.x = dicePos[1] * CELL_WIDTH
+        game.die_sprite.y = dicePos[0] * CELL_HEIGHT
+        var diceVal = 'd'+board.getDice().getTopValue();
+        game.die_sprite.loadTexture(board_img_dict[diceVal])
     }
     function update_text() {
         update_dice_visual();
