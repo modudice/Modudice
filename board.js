@@ -120,28 +120,23 @@ function Board (size) {
         movesRemaining -= 1;
         if (board[i][j] != null && board[i][j] > 0) {
             board[i][j] = (board[i][j] + diceValue) % 7;
+        
+            if (board[i][j] === 0) {
+                // Increment combo length, add score and moves.
+                comboLength += 1;
+                score += BASE_SCORE * comboLength;
+                movesRemaining += BASE_MOVES * comboLength;
+            }
         }
-        if (board[i][j] === 0) {
-            // Increment combo length, add score and moves.
-            comboLength += 1;
-            score += BASE_SCORE * comboLength;
-            movesRemaining += BASE_MOVES * comboLength;
-        }
-        else {
+        if (comboLength > 0 && board[i][j] !== 0) {
             comboLength = 0;
-        }
-
-        for (x = 0; x < size; x++) {
-            for (y = 0; y < size; y++) {
-                var val = board[x][y];
-                if (val === null) {
-                    // Permanent blank square, do nothing.
-                }
-                else if (val <= 0) {
-                    // Decrement the timer.
-                    board[x][y] -= 1;
-                    if (board[x][y] === -TILE_RESET_TURN - 1) {
-                        // The timer has run out, reset square.
+            for (x = 0; x < size; x++) {
+                for (y = 0; y < size; y++) {
+                    var val = board[x][y];
+                    if (val === null) {
+                        // Permanent blank square, do nothing.
+                    }
+                    else if (val === 0) {
                         board[x][y] = Math.floor((Math.random() * 6) + 1);
                     }
                 }
