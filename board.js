@@ -8,6 +8,8 @@ function Board (size) {
     var BASE_SCORE = 100;
     var BASE_MOVES = 3;
 
+    var shouldReset = false;
+    var comboChain = [];
     var score = 0;
     var movesRemaining = 50;
     var comboLength = 0;
@@ -44,6 +46,9 @@ function Board (size) {
     };
 
     this.moveNorth = function() {
+        if (comboLength === 0){
+            comboChain = [];
+        }
         i = dicePosition[0] - 1;
         j = dicePosition[1];
         if (isValidPosition(i,j) && movesRemaining > 0) {
@@ -55,6 +60,9 @@ function Board (size) {
     };
 
     this.moveSouth = function() {
+        if (comboLength === 0){
+            comboChain = [];
+        }
         i = dicePosition[0] + 1;
         j = dicePosition[1];
         if (isValidPosition(i,j) && movesRemaining > 0) {
@@ -66,6 +74,9 @@ function Board (size) {
     };
 
     this.moveEast = function() {
+        if (comboLength === 0){
+            comboChain = [];
+        }
         i = dicePosition[0];
         j = dicePosition[1] + 1;
         if (isValidPosition(i,j) && movesRemaining > 0) {
@@ -77,6 +88,9 @@ function Board (size) {
     };
 
     this.moveWest = function() {
+        if (comboLength === 0){
+            comboChain = [];
+        }
         i = dicePosition[0];
         j = dicePosition[1] - 1;
         if (isValidPosition(i,j) && movesRemaining > 0) {
@@ -108,6 +122,13 @@ function Board (size) {
         return movesRemaining;
     };
 
+    this.getComboChain = function() {
+        return comboChain;
+    };
+    this.getShouldReset = function() {
+        return shouldReset;
+    };
+
     this.isGameOver = function() {
         return movesRemaining === 0;
     };
@@ -124,10 +145,13 @@ function Board (size) {
         if (board[i][j] === 0) {
             // Increment combo length, add score and moves.
             comboLength += 1;
+            shouldReset = false;
+            comboChain.push([i,j]);
             score += BASE_SCORE * comboLength;
             movesRemaining += BASE_MOVES * comboLength;
         }
         else {
+            shouldReset = true;
             comboLength = 0;
         }
 

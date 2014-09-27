@@ -145,11 +145,18 @@ window.onload = function() {
         cell = game.board_sprites[locX][locY];
         if (value != null && value > 0){
             cell.loadTexture(img_dict[value]);
-        }else{
-            cell.loadTexture('board_free');
+        }
+        else{
+            cell.loadTexture(img_dict[0]);
+        }
+        if (board.getShouldReset()){
+            board.getComboChain().forEach(function(cell, index){
+            cell = game.board_sprites[cell[0]][cell[1]];
+            cell.loadTexture(img_dict[Math.floor((Math.random() * 6) + 1)]);
+        });
         }
     }
-    
+        
     function update_Die(){
         var dicePos = board.getDicePosition();
         game.die_sprite.x = dicePos[1] * CELL_WIDTH;
