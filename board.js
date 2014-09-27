@@ -46,6 +46,9 @@ function Board (size) {
     };
 
     this.moveNorth = function() {
+       if(movesRemaining <= 0){
+           this.dead();
+       }
         if (comboLength === 0){
             comboChain = [];
         }
@@ -60,6 +63,9 @@ function Board (size) {
     };
 
     this.moveSouth = function() {
+       if(movesRemaining <= 0){
+           this.dead();
+       }
         if (comboLength === 0){
             comboChain = [];
         }
@@ -74,6 +80,9 @@ function Board (size) {
     };
 
     this.moveEast = function() {
+        if(movesRemaining <= 0){
+           this.dead();
+        }
         if (comboLength === 0){
             comboChain = [];
         }
@@ -88,6 +97,9 @@ function Board (size) {
     };
 
     this.moveWest = function() {
+        if(movesRemaining <= 0){
+           this.dead();
+        }
         if (comboLength === 0){
             comboChain = [];
         }
@@ -100,6 +112,10 @@ function Board (size) {
             return [[i, j + 1], [i, j]];
         }
 
+    };
+    
+    this.dead = function() {
+       $(".dead").show();
     };
 
     this.getScore = function() {
