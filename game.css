@@ -41,7 +41,8 @@ margin-bottom:40px
 .game_info {
 position:fixed;
 top:150px;
-clear:both
+clear:both;
+width: 310px;
 }
 
 #dice_visual {
@@ -57,8 +58,16 @@ margin-top:10px
 }
 
 #north,#south {
-margin-left:100px
+margin-left:100px;
 }
+#navigator{
+    overflow:hidden;
+}
+#north, #south, #center, #east, #west {
+position:relative;
+}
+
+
 
 #score,#moves,#combo {
 display:block;

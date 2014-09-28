@@ -66,21 +66,28 @@ window.onload = function() {
             cellsChanged = board.moveWest();
             update_Board(board, board_img_dict, cellsChanged);
             update_text();
+            update_nav_horiz('left');
         }, this);
         cursors.right.onUp.add(function() {
             cellsChanged = board.moveEast();
             update_Board(board, board_img_dict, cellsChanged);
             update_text();
+            update_nav_horiz('right');
+
         }, this);
         cursors.up.onUp.add(function() {
             cellsChanged = board.moveNorth();
             update_Board(board, board_img_dict, cellsChanged);
             update_text();
+            update_nav_vert('up');
+
         }, this);
         cursors.down.onUp.add(function() {
             cellsChanged = board.moveSouth();
             update_Board(board, board_img_dict, cellsChanged);
             update_text();
+            update_nav_vert('down');
+
         }, this);
     }
 
@@ -116,7 +123,6 @@ window.onload = function() {
 //            cell = cellsChanged[ind];
 //            draw_Cell(board.getValue(cell[0], cell[1]), cell[1], cell[0], img_dict);
 //        }
-        console.log(cellsChanged);
         cellsChanged.forEach(function(cell, index){
             update_Cell(board.getValue(cell[0], cell[1]), cell[0], cell[1], img_dict);
         });
@@ -141,7 +147,6 @@ window.onload = function() {
     //Replaces the image of a cell after the value changes.
     //Does not create a new sprite, therefore should save resources.
     function update_Cell(value, locX, locY, img_dict){
-        console.log(img_dict);
         cell = game.board_sprites[locX][locY];
         if (value != null && value > 0){
             cell.loadTexture(img_dict[value]);
@@ -184,7 +189,10 @@ window.onload = function() {
         var die_png = "Assets/die_" + value + ".png";
         document.getElementById(id).src = die_png;
     }
-
+    
+    function update_face_class(cla, value){
+        var die_png = "Assets/die_" + value + ".png";
+    }
     function update_dice_visual() {
         var dice = board.getDice();
         update_face("north", dice.getNorthValue());
@@ -192,5 +200,42 @@ window.onload = function() {
         update_face("center", dice.getTopValue());
         update_face("east", dice.getEastValue());
         update_face("south", dice.getSouthValue());
+        update_face_class('.bot', dice.getBottomValue());
     }
+        
+        
+    function update_nav_horiz(direction){
+        $('.horiz').hide()
+        if (direction == 'left'){
+            animation1 = {right: '-100px'}
+            animation2 = {right: '0px'}
+        }else if (direction == 'right'){
+            animation1 = {left: '-100px'}
+            animation2 = {left: '0px'}
+        }
+        $('.horiz').animate(animation1, 0.001, function(){
+                $('.horiz').show()
+                $('.horiz').animate(animation2,100)
+        })
+        $('.horiz').css('left', '')
+        $('.horiz').css('right', '')
+    }
+    
+    function update_nav_vert(direction){
+        $('.vert').hide()
+        if (direction == 'up'){
+            animation1 = {bottom: '-100px'}
+            animation2 = {bottom: '0px'}
+        }else if (direction == 'down'){
+            animation1 = {top: '-100px'}
+            animation2 = {top: '0px'}
+        }
+        $('.vert').animate(animation1, 0.001, function(){
+                $('.vert').show()
+                $('.vert').animate(animation2,100)
+        })
+        $('.vert').css('top', '')
+        $('.vert').css('bottom', '')
+    }
+    
 };
