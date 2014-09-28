@@ -116,7 +116,7 @@ function Board (size) {
     
     this.dead = function() {
        $(".dead").show();
-       $(".overlayMessage").show();
+       $(".gameOverMessage").show();
     };
 
     this.getScore = function() {
@@ -181,6 +181,18 @@ function Board (size) {
             movesRemaining += moves_to_add;
         }
         else {
+            if (comboLength > 0) {
+              var comboMessage;
+              if (comboLength === 1) {
+                comboMessage = "7 Created! " + BASE_SCORE + " points";
+              }
+              else {
+                comboMessage = comboLength + "x Combo! " + BASE_SCORE * comboLength + " points";
+              }
+              $(".comboMessage").text(comboMessage); 
+              $(".comboMessage").show();
+              setTimeout(function(){ $(".comboMessage").hide();}, 500);
+            }
             shouldReset = true;
             comboLength = 0;
         }
