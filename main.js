@@ -32,12 +32,30 @@ window.onload = function() {
                           '4':'board_4',
                           '5':'board_5',
                           '6':'board_6',
-                          'd1': 'die_1',
-                          'd2': 'die_2',
-                          'd3': 'die_3',
-                          'd4': 'die_4',
-                          'd5': 'die_5',
-                          'd6': 'die_6',};
+                          'd12': 'die_1_2',
+                          'd13': 'die_1_3',
+                          'd14': 'die_1_4',
+                          'd15': 'die_1_5',
+                          'd21': 'die_2_1',
+                          'd23': 'die_2_3',
+                          'd24': 'die_2_4',
+                          'd26': 'die_2_6',
+                          'd31': 'die_3_1',
+                          'd32': 'die_3_2',
+                          'd35': 'die_3_5',
+                          'd36': 'die_3_6',
+                          'd41': 'die_4_1',
+                          'd42': 'die_4_2',
+                          'd45': 'die_4_5',
+                          'd46': 'die_4_6',
+                          'd51': 'die_5_1',
+                          'd53': 'die_5_3',
+                          'd54': 'die_5_4',
+                          'd56': 'die_5_6',
+                          'd62': 'die_6_2',
+                          'd63': 'die_6_3',
+                          'd64': 'die_6_4',
+                          'd65': 'die_6_5',};
     
     
     function preload () {
@@ -49,12 +67,31 @@ window.onload = function() {
         game.load.image('board_5', 'Assets/board_5.png');
         game.load.image('board_6', 'Assets/board_6.png');
         game.load.image('board_free', 'Assets/board_free.png');
-        game.load.image('die_1', 'Assets/die_1.png');
-        game.load.image('die_2', 'Assets/die_2.png');
-        game.load.image('die_3', 'Assets/die_3.png');
-        game.load.image('die_4', 'Assets/die_4.png');
-        game.load.image('die_5', 'Assets/die_5.png');
-        game.load.image('die_6', 'Assets/die_6.png');
+        game.load.image('die_1_2', 'Assets/die_1_2.png');
+        game.load.image('die_1_3', 'Assets/die_1_3.png');
+        game.load.image('die_1_4', 'Assets/die_1_4.png');
+        game.load.image('die_1_5', 'Assets/die_1_5.png');
+        game.load.image('die_2_1', 'Assets/die_2_1.png');
+        game.load.image('die_2_3', 'Assets/die_2_3.png');
+        game.load.image('die_2_4', 'Assets/die_2_4.png');
+        game.load.image('die_2_6', 'Assets/die_2_6.png');
+        game.load.image('die_3_1', 'Assets/die_3_1.png');
+        game.load.image('die_3_2', 'Assets/die_3_2.png');
+        game.load.image('die_3_5', 'Assets/die_3_5.png');
+        game.load.image('die_3_6', 'Assets/die_3_6.png');
+        game.load.image('die_4_1', 'Assets/die_4_1.png');
+        game.load.image('die_4_2', 'Assets/die_4_2.png');
+        game.load.image('die_4_5', 'Assets/die_4_5.png');
+        game.load.image('die_4_6', 'Assets/die_4_6.png');
+        game.load.image('die_5_1', 'Assets/die_5_1.png');
+        game.load.image('die_5_3', 'Assets/die_5_3.png');
+        game.load.image('die_5_4', 'Assets/die_5_4.png');
+        game.load.image('die_5_6', 'Assets/die_5_6.png');
+        game.load.image('die_6_2', 'Assets/die_6_2.png');
+        game.load.image('die_6_3', 'Assets/die_6_3.png');
+        game.load.image('die_6_4', 'Assets/die_6_4.png');
+        game.load.image('die_6_5', 'Assets/die_6_5.png');
+
     }
 
     function create () {
@@ -89,6 +126,7 @@ window.onload = function() {
             update_nav_vert('down');
 
         }, this);
+        update_Die();
     }
 
     function update() {
@@ -166,7 +204,7 @@ window.onload = function() {
         var dicePos = board.getDicePosition();
         game.die_sprite.x = dicePos[1] * CELL_WIDTH;
         game.die_sprite.y = dicePos[0] * CELL_HEIGHT;
-        var diceVal = 'd'+board.getDice().getTopValue();
+        var diceVal = 'd'+board.getDice().getTopValue() + board.getDice().getNorthValue();
         game.die_sprite.loadTexture(board_img_dict[diceVal]);
     }
     function update_text() {
@@ -185,22 +223,22 @@ window.onload = function() {
         document.getElementById("moves").innerHTML = "Moves Remaining: " + board.getMovesRemaining();
     }
 
-    function update_face(id, value) {
-        var die_png = "Assets/die_" + value + ".png";
+    function update_face(id, value, northValue) {
+        var die_png = "Assets/die_" + value + "_" + northValue + ".png";
         document.getElementById(id).src = die_png;
     }
     
-    function update_face_class(cla, value){
-        var die_png = "Assets/die_" + value + ".png";
+    function update_face_class(cla, value, northValue){
+        var die_png = "Assets/die_" + value + "_" + northValue + ".png";
     }
     function update_dice_visual() {
         var dice = board.getDice();
-        update_face("north", dice.getNorthValue());
-        update_face("west", dice.getWestValue());
-        update_face("center", dice.getTopValue());
-        update_face("east", dice.getEastValue());
-        update_face("south", dice.getSouthValue());
-        update_face_class('.bot', dice.getBottomValue());
+        update_face("north", dice.getNorthValue(), dice.getBottomValue());
+        update_face("west", dice.getWestValue(), dice.getNorthValue());
+        update_face("center", dice.getTopValue(), dice.getNorthValue());
+        update_face("east", dice.getEastValue(), dice.getNorthValue());
+        update_face("south", dice.getSouthValue(), dice.getTopValue());
+        update_face_class('.bot', dice.getBottomValue(), dice.getSouthValue());
     }
         
         
