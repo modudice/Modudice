@@ -54,10 +54,11 @@ function Board (size) {
         }
         i = dicePosition[0] - 1;
         j = dicePosition[1];
+        top_value = dice.getTopValue();
         if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollNorth();
             dicePosition = [i,j];
-            makeMove(i, j, dice.getTopValue());
+            makeMove(i, j, top_value);
             return [[i + 1, j], [i, j]];
         }
     };
@@ -71,10 +72,11 @@ function Board (size) {
         }
         i = dicePosition[0] + 1;
         j = dicePosition[1];
+        top_value = dice.getTopValue();
         if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollSouth();
             dicePosition = [i,j];
-            makeMove(i, j, dice.getTopValue());
+            makeMove(i, j, top_value);
             return [[i - 1, j], [i, j]];
         }
     };
@@ -88,10 +90,11 @@ function Board (size) {
         }
         i = dicePosition[0];
         j = dicePosition[1] + 1;
+        top_value = dice.getTopValue();
         if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollEast();
             dicePosition = [i,j];
-            makeMove(i, j, dice.getTopValue());
+            makeMove(i, j, top_value);
             return [[i, j - 1], [i, j]];
         }
     };
@@ -105,10 +108,11 @@ function Board (size) {
         }
         i = dicePosition[0];
         j = dicePosition[1] - 1;
+        top_value = dice.getTopValue();
         if (isValidPosition(i,j) && movesRemaining > 0) {
             dice.rollWest();
             dicePosition = [i,j];
-            makeMove(i, j, dice.getTopValue());
+            makeMove(i, j, top_value);
             return [[i, j + 1], [i, j]];
         }
 
