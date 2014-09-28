@@ -47,7 +47,7 @@ function Board (size) {
 
     this.moveNorth = function() {
        if(movesRemaining <= 0){
-           this.dead();
+           dead();
        }
         if (comboLength === 0){
             comboChain = [];
@@ -64,7 +64,7 @@ function Board (size) {
 
     this.moveSouth = function() {
        if(movesRemaining <= 0){
-           this.dead();
+           dead();
        }
         if (comboLength === 0){
             comboChain = [];
@@ -81,7 +81,7 @@ function Board (size) {
 
     this.moveEast = function() {
         if(movesRemaining <= 0){
-           this.dead();
+           dead();
         }
         if (comboLength === 0){
             comboChain = [];
@@ -98,7 +98,7 @@ function Board (size) {
 
     this.moveWest = function() {
         if(movesRemaining <= 0){
-           this.dead();
+           dead();
         }
         if (comboLength === 0){
             comboChain = [];
@@ -114,7 +114,7 @@ function Board (size) {
 
     };
     
-    this.dead = function() {
+    dead = function() {
        $(".dead").show();
        $(".gameOverMessage").show();
     };
@@ -156,12 +156,8 @@ function Board (size) {
     */
     function makeMove(i, j, diceValue) {
         movesRemaining -= 1;
-        var wasZero = false;
-        if (board[i][j] === 0) {
-          //stepped back onto your own combo, just end the combo
-          wasZero = true;
-        }
-        else if (board[i][j] != null && board[i][j] > 0) {
+        var wasZero = (board[i][j] === 0);
+        if (board[i][j] != null && board[i][j] > 0) {
             board[i][j] = (board[i][j] + diceValue) % 7;
         }
         if (board[i][j] === 0 && !wasZero) {
@@ -202,25 +198,9 @@ function Board (size) {
             comboLength = 0;
         }
 
-        for (x = 0; x < size; x++) {
-            for (y = 0; y < size; y++) {
-                var val = board[x][y];
-                if (val === null) {
-                    // Permanent blank square, do nothing.
-                }
-                else if (val < 0) {
-                    // Decrement the timer.
-                    board[x][y] -= 1;
-                    if (board[x][y] === -TILE_RESET_TURN - 1) {
-                        // The timer has run out, reset square.
-                        board[x][y] = Math.floor((Math.random() * 6) + 1);
-                    }
-                }
-            }
-        }
         if (movesRemaining === 0) {
             document.getElementById("moves").innerHTML = "Moves Remaining: 0";
-            this.dead();
+            dead();
         }
     }
 
