@@ -191,7 +191,7 @@ function Board (size) {
               }
               $(".comboMessage").text(comboMessage); 
               $(".comboMessage").show();
-              setTimeout(function(){ $(".comboMessage").hide();}, 500);
+              setTimeout(function(){ $(".comboMessage").hide();}, 1500);
             }
             shouldReset = true;
             comboLength = 0;
