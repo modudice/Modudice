@@ -25,7 +25,7 @@ window.onload = function() {
     var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, 'board', { preload: preload, create: create, update: update });
 
     var board_img_dict = {
-                          '0':'board_0',
+                          '7':'board_7',
                           '1':'board_1',
                           '2':'board_2',
                           '3':'board_3',
@@ -59,7 +59,7 @@ window.onload = function() {
     
     
     function preload () {
-        game.load.image('board_0', 'Assets/board_0.png');
+        game.load.image('board_7', 'Assets/board_7.png');
         game.load.image('board_1', 'Assets/board_1.png');
         game.load.image('board_2', 'Assets/board_2.png');
         game.load.image('board_3', 'Assets/board_3.png');
@@ -189,8 +189,11 @@ window.onload = function() {
         if (value != null && value > 0){
             cell.loadTexture(img_dict[value]);
         }
-        else{
-            cell.loadTexture(img_dict[0]);
+        else if (value === 0) {
+            cell.loadTexture(img_dict[7]);
+        }
+        else {
+            cell.loadTexture("board_free");
         }
         if (board.getShouldReset()){
             board.getComboChain().forEach(function(cell, index){
