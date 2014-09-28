@@ -11,7 +11,7 @@ function Board (size) {
     var shouldReset = false;
     var comboChain = [];
     var score = 0;
-    var movesRemaining = 50;
+    var movesRemaining = 20;
     var comboLength = 0;
     var dice = new Dice();
     var dicePosition = [Math.floor(size/2), Math.floor(size/2)];
@@ -164,7 +164,7 @@ function Board (size) {
             shouldReset = false;
             comboChain.push([i,j]);
             score += BASE_SCORE * comboLength;
-            movesRemaining += BASE_MOVES * comboLength;
+            movesRemaining += BASE_MOVES * Math.floor(Math.log(comboLength)/.693147);
         }
         else {
             shouldReset = true;
