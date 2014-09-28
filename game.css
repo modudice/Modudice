@@ -81,3 +81,18 @@ border-radius:3px;
 color:#fff;
 margin-top:10px
 }
+
+.overlayMessage{
+     position:absolute;
+     width:300px;
+     height:200px;
+     z-index:15;
+     top:50%;
+     left:50%;
+     margin:-150px 0 0 -217px;
+     font-size: 1000%;
+     color: red;
+     font-style: bold;
+     text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
+     display: none;
+}

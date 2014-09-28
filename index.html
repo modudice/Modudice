@@ -22,7 +22,7 @@
                 </h1>
             </div>
             <div id="directions">
-                <b>HOW TO PLAY:</b> Use your arrow keys to move the dice. When you roll onto a square the number on the top face of the die adds to the number on the square mod 7. You create combos when you create zeros!
+                <b>HOW TO PLAY:</b> Use your arrow keys to roll around the die. When you roll onto a square the number on the top of the die gets added to the number on the square, modulo 7. Rack up points and more moves by making 7's, and get even greater bonuses when you combo and create multiple 7's in a row!
             </div>
             <div class='game_info'>
                 <div id="score">
@@ -41,6 +41,7 @@
 
                 </div>
             </div>
+            <div id="overlayMessage" class="overlayMessage">Game Over!</div>
             <div id="board"></div>
             <div class="dead" style="display: none; position: absolute; top: 300px; left: 1200px;"><a onclick="location.reload()">You ran out of moves! Click here to restart.</a></div>
         </div>

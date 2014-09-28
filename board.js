@@ -116,6 +116,7 @@ function Board (size) {
     
     this.dead = function() {
        $(".dead").show();
+       $(".overlayMessage").show();
     };
 
     this.getScore = function() {
@@ -199,6 +200,10 @@ function Board (size) {
                     }
                 }
             }
+        }
+        if (movesRemaining === 0) {
+            document.getElementById("moves").innerHTML = "Moves Remaining: 0";
+            this.dead();
         }
     }
 
