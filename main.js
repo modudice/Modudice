@@ -186,10 +186,11 @@ window.onload = function() {
     //Does not create a new sprite, therefore should save resources.
     function update_Cell(value, locX, locY, img_dict){
         cell = game.board_sprites[locX][locY];
+        console.log(value);
         if (value != null && value > 0){
             cell.loadTexture(img_dict[value]);
         }
-        else if (value === 0) {
+        else if (value === 0 || value === 7) {
             cell.loadTexture(img_dict[7]);
         }
         else {

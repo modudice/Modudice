@@ -11,7 +11,7 @@ function Board (size) {
     var shouldReset = false;
     var comboChain = [];
     var score = 0;
-    var movesRemaining = 20;
+    var movesRemaining = 30;
     var comboLength = 0;
     var dice = new Dice();
     var dicePosition = [Math.floor(size/2), Math.floor(size/2)];
@@ -164,7 +164,20 @@ function Board (size) {
             shouldReset = false;
             comboChain.push([i,j]);
             score += BASE_SCORE * comboLength;
-            movesRemaining += BASE_MOVES * Math.floor(Math.log(comboLength)/.693147);
+            moves_to_add = 1;
+            if (comboLength >= 5) {
+                moves_to_add = 16 + 2*(comboLength - 5);
+            }
+            else if (comboLength === 4) {
+                moves_to_add = 8;
+            }
+            else if (comboLength === 3) {
+                moves_to_add = 4;
+            }
+            else if (comboLength === 2) {
+                moves_to_add = 2;
+            }
+            movesRemaining += moves_to_add;
         }
         else {
             shouldReset = true;
@@ -177,7 +190,7 @@ function Board (size) {
                 if (val === null) {
                     // Permanent blank square, do nothing.
                 }
-                else if (val <= 0) {
+                else if (val < 0) {
                     // Decrement the timer.
                     board[x][y] -= 1;
                     if (board[x][y] === -TILE_RESET_TURN - 1) {
