@@ -156,10 +156,15 @@ function Board (size) {
     */
     function makeMove(i, j, diceValue) {
         movesRemaining -= 1;
-        if (board[i][j] != null && board[i][j] > 0) {
+        var wasZero = false;
+        if (board[i][j] === 0) {
+          //stepped back onto your own combo, just end the combo
+          wasZero = true;
+        }
+        else if (board[i][j] != null && board[i][j] > 0) {
             board[i][j] = (board[i][j] + diceValue) % 7;
         }
-        if (board[i][j] === 0) {
+        if (board[i][j] === 0 && !wasZero) {
             // Increment combo length, add score and moves.
             comboLength += 1;
             shouldReset = false;
