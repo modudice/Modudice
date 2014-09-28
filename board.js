@@ -142,6 +142,10 @@ function Board (size) {
     this.getComboChain = function() {
         return comboChain;
     };
+    this.resetComboChain = function() {
+        comboChain = [];
+        shouldReset = false;
+    };
     this.getShouldReset = function() {
         return shouldReset;
     };
@@ -149,6 +153,10 @@ function Board (size) {
     this.isGameOver = function() {
         return movesRemaining === 0;
     };
+    this.setCell = function(i,j,value) {
+        console.log(i);
+        board[i][j] = value;
+    }; 
 
     /*
     Move die with value diceValue to position i,j.
@@ -188,7 +196,7 @@ function Board (size) {
                 comboMessage = "7 Created! " + BASE_SCORE + " points";
               }
               else {
-                comboMessage = comboLength + "x Combo! " + BASE_SCORE * comboLength + " points";
+                comboMessage = comboLength + "x Combo! " + BASE_SCORE*((comboLength*(comboLength+1))/2) + " points";
               }
               $(".comboMessage").text(comboMessage); 
               $(".comboMessage").show();

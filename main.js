@@ -186,7 +186,6 @@ window.onload = function() {
     //Does not create a new sprite, therefore should save resources.
     function update_Cell(value, locX, locY, img_dict){
         cell = game.board_sprites[locX][locY];
-        console.log(value);
         if (value != null && value > 0){
             cell.loadTexture(img_dict[value]);
         }
@@ -198,9 +197,12 @@ window.onload = function() {
         }
         if (board.getShouldReset()){
             board.getComboChain().forEach(function(cell, index){
-            cell = game.board_sprites[cell[0]][cell[1]];
-            cell.loadTexture(img_dict[Math.floor((Math.random() * 6) + 1)]);
-        });
+              rand = Math.floor((Math.random() * 6) + 1);
+              board.setCell(cell[0],cell[1],rand);
+              cell = game.board_sprites[cell[0]][cell[1]];
+              cell.loadTexture(img_dict[rand]);
+            });
+            board.resetComboChain();
         }
     }
         
