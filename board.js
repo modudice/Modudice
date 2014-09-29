@@ -174,12 +174,12 @@ function Board (size) {
             shouldReset = false;
             comboChain.push([i,j]);
             score += BASE_SCORE * comboLength;
-            moves_to_add = 1;
+            moves_to_add = 2;
             if (comboLength >= 5) {
-                moves_to_add = 16 + 2*(comboLength - 5);
+                moves_to_add = 8 + 2*(comboLength - 5);
             }
             else if (comboLength === 4) {
-                moves_to_add = 8;
+                moves_to_add = 4;
             }
             else if (comboLength === 3) {
                 moves_to_add = 4;
