@@ -85,9 +85,9 @@ margin-top:10px
 .gameOverMessage {
      position:absolute;
      width:300px;
-     height:200px;
+     height:100px;
      z-index:15;
-     top:50%;
+     top:60%;
      left:50%;
      margin:-150px 0 0 -217px;
      font-size: 1000%;
@@ -99,13 +99,13 @@ margin-top:10px
 
 .comboMessage {
      position:absolute;
-     width:450px;
+     width:1000px;
      height:200px;
      z-index:15;
      top:50%;
      left:50%;
      margin:-150px 0 0 -217px;
-     font-size: 500%;
+     font-size: 300%;
      color: red;
      font-style: bold;
      text-shadow: -3px 0 white, 0 3px white, 3px 0 white, 0 -3px white;
@@ -115,4 +115,8 @@ margin-top:10px
 .creditText {
      float: right;
      font-size: 50%;
+}
+
+p {
+     font-size: 85%
 }

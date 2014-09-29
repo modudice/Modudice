@@ -11,7 +11,7 @@ function Board (size) {
     var shouldReset = false;
     var comboChain = [];
     var score = 0;
-    var movesRemaining = 30;
+    var movesRemaining = 20;
     var comboLength = 0;
     var dice = new Dice();
     var dicePosition = [Math.floor(size/2), Math.floor(size/2)];
@@ -188,20 +188,18 @@ function Board (size) {
                 moves_to_add = 2;
             }
             movesRemaining += moves_to_add;
+            var comboMessage;
+            if (comboLength === 1) {
+              comboMessage = BASE_SCORE + " points";
+            }
+            else {
+              comboMessage = comboLength + "x Combo! " + BASE_SCORE*((comboLength*(comboLength+1))/2) + " points";
+            }
+            $(".comboMessage").text(comboMessage); 
+            $(".comboMessage").show();
+            setTimeout(function(){ $(".comboMessage").hide();}, 1500);
         }
         else {
-            if (comboLength > 0) {
-              var comboMessage;
-              if (comboLength === 1) {
-                comboMessage = BASE_SCORE + " points";
-              }
-              else {
-                comboMessage = comboLength + "x Combo! " + BASE_SCORE*((comboLength*(comboLength+1))/2) + " points";
-              }
-              $(".comboMessage").text(comboMessage); 
-              $(".comboMessage").show();
-              setTimeout(function(){ $(".comboMessage").hide();}, 1500);
-            }
             shouldReset = true;
             comboLength = 0;
         }
