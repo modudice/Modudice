@@ -193,7 +193,7 @@ function Board (size) {
             if (comboLength > 0) {
               var comboMessage;
               if (comboLength === 1) {
-                comboMessage = "7 Created! " + BASE_SCORE + " points";
+                comboMessage = BASE_SCORE + " points";
               }
               else {
                 comboMessage = comboLength + "x Combo! " + BASE_SCORE*((comboLength*(comboLength+1))/2) + " points";
